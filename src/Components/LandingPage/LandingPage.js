@@ -3,7 +3,20 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import StarsCard from '../StarsCard/StarsCard';
+
 import './LandingPage.css';
+
+function debounce(fn, delay) {
+  let timer = null;
+  return function () {
+    const context = this;
+    const args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      fn.apply(context, args);
+    }, delay);
+  };
+}
 
 const randomSearch = ['starships', 'films', 'vehicles'][
   Math.floor(Math.random() * 3)
@@ -23,27 +36,17 @@ function sortAlphabetically(array, key, flag) {
 }
 
 const LandingPage = () => {
-  const [formData, setFormData] = useState('starships');
+  const [formData, setFormData] = useState(randomSearch);
   const [SWAPIRes, setSWAPIRes] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [sortFlag, setSortFlag] = useState(false);
 
-  function debounce(fn, delay) {
-    let timer = null;
-    return function () {
-      const context = this;
-      const args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        fn.apply(context, args);
-      }, delay);
-    };
-  }
-
   useEffect(() => {
     const searchSWAPI = async () => {
       const response = await fetch(
-        `https://swapi.dev/api/${formData}/?page=${pageNum}`
+        `https://swapi.dev/api/${formData}/?page=${
+          formData === 'films' ? 1 : pageNum
+        }`
       );
 
       const data = await response.json();
@@ -70,7 +73,14 @@ const LandingPage = () => {
     setFormData(event.target.value);
   }, 500);
 
-  console.log(pageNum);
+  const handleBtnClick = str => {
+    str === 'prev' ? setPageNum(pageNum - 1) : setPageNum(pageNum + 1);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
   return (
     <div className='landingContainer'>
@@ -86,11 +96,34 @@ const LandingPage = () => {
             />
           </form>
         </div>
-        <Tooltip title='Click twice for reverse'>
-          <Button sx={{ mt: 1 }} onClick={handleClick} variant='contained'>
-            Sort Alphabetically
-          </Button>
-        </Tooltip>
+        <div className='sortBtn'>
+          <Tooltip title='Click twice for reverse'>
+            <Button
+              sx={{
+                mt: 1,
+                ml: {
+                  xs: 1,
+                  sm: 3,
+                  md: 4,
+                },
+                background: 'transparent',
+                border: '2px solid #cd853f',
+                '&:hover': {
+                  backgroundColor: '#cd853f',
+                },
+                width: {
+                  xs: 180,
+                  sm: 500,
+                  md: 500,
+                },
+              }}
+              onClick={handleClick}
+              variant='contained'
+            >
+              Sort Alphabetically
+            </Button>
+          </Tooltip>
+        </div>
       </div>
       <div className='resultsContainer'>
         {SWAPIRes.map((data, i) => (
@@ -108,17 +141,33 @@ const LandingPage = () => {
           >
             <Button
               disabled={pageNum === 1}
-              sx={{ width: 200, height: 70, fontSize: 20 }}
+              sx={{
+                width: 200,
+                height: 70,
+                fontSize: 20,
+                background: 'transparent',
+                '&:hover': {
+                  backgroundColor: '#cd853f',
+                },
+              }}
               variant='contained'
-              onClick={() => setPageNum(pageNum - 1)}
+              onClick={() => handleBtnClick('prev')}
             >
               Previous
             </Button>
             <Button
-              sx={{ width: 200, height: 70, fontSize: 20 }}
+              sx={{
+                width: 200,
+                height: 70,
+                fontSize: 20,
+                background: 'transparent',
+                '&:hover': {
+                  backgroundColor: '#cd853f',
+                },
+              }}
               disabled={pageNum > 3}
               variant='contained'
-              onClick={() => setPageNum(pageNum + 1)}
+              onClick={() => handleBtnClick('next')}
             >
               Next
             </Button>
