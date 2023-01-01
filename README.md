@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# UKTV Frontend Task
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -14,7 +14,7 @@ In the project directory, you can run:
 
 ### `npm start`
 
-# Live demo: here
+# Live demo: [here](https://imaginative-sprinkles-fd5819.netlify.app/)
 
 # What I would of done differently/grow the app:
 
