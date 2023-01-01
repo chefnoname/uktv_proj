@@ -57,6 +57,8 @@ const LandingPage = () => {
     searchSWAPI();
   }, [formData, pageNum]);
 
+  console.log(formData);
+
   useEffect(() => {
     if (SWAPIRes[0]) {
       const key = SWAPIRes[0].name ? 'name' : 'title';
@@ -70,7 +72,7 @@ const LandingPage = () => {
   };
 
   const handleChange = debounce(event => {
-    setFormData(event.target.value);
+    setFormData(event.target.value.toLowerCase());
   }, 500);
 
   const handleBtnClick = str => {
