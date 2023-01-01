@@ -1,0 +1,9 @@
+.vehicleDetail {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.subTitle {
+  display: flex;
+  flex-direction: column;
+}
