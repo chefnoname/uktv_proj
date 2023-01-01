@@ -14,7 +14,7 @@ In the project directory, you can run:
 
 ### `npm start`
 
-# Live demo: [here](https://imaginative-sprinkles-fd5819.netlify.app/)
+# Live demo: [here](https://idyllic-marshmallow-a66755.netlify.app/)
 
 # What I would of done differently/grow the app:
 
