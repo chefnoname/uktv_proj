@@ -44,9 +44,9 @@ const LandingPage = () => {
   useEffect(() => {
     const searchSWAPI = async () => {
       const response = await fetch(
-        `https://swapi.dev/api/${formData}/?page=${
-          formData === 'films' ? 1 : pageNum
-        }`
+        `https://swapi.dev/api/${
+          formData.length === 0 ? randomSearch : formData
+        }/?page=${formData === 'films' ? 1 : pageNum}`
       );
 
       const data = await response.json();
